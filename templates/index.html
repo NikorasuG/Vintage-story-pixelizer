@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel art → blocs Vintage Story</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Pixel art → blocs Vintage Story</h1>
+    <p>Pixelise une image puis associe chaque pixel au bloc de couleur le plus proche (palette fixe, 0–79).</p>
+  </header>
+
+  <main>
+    <section class="carte">
+      <h2>1. Image</h2>
+      <label id="zone-depot" class="depot">
+        <input type="file" id="fichier" accept="image/*" hidden>
+        <span>Clique ou glisse ton image ici</span>
+      </label>
+
+      <p id="dimensions" class="dimensions"></p>
+      <div class="barre">
+        <label>Taille d'un pixel
+          <input type="range" id="taille-pixel" min="1" max="{{ taille_pixel_max }}" value="1">
+          <b id="pixel-val">1</b>
+        </label>
+        <span id="dims" class="discret"></span>
+      </div>
+      <div class="barre">
+        <label>Méthode
+          <select id="methode">
+            <option value="lisse">Lissée (photos)</option>
+            <option value="net">Nette (pixel art)</option>
+          </select>
+        </label>
+        <label>Taille des cases <input type="number" id="taille-case" value="28" min="16" max="60"></label>
+        <label><input type="checkbox" id="colorier" checked> Colorier les cases</label>
+        <button id="btn-generer" type="button" disabled>Régénérer</button>
+      </div>
+      <p id="info" class="discret"></p>
+      <p id="erreur" class="erreur" role="alert"></p>
+
+      <details>
+        <summary>Palette des 80 blocs</summary>
+        <div class="palette">
+          {% for code in palette %}
+          <div class="echantillon" title="#{{ code }}">
+            <span class="pastille" style="background:#{{ code }}"></span>
+            <b>{{ loop.index0 }}</b>
+          </div>
+          {% endfor %}
+        </div>
+      </details>
+    </section>
+
+    <section class="carte" id="resultat" hidden>
+      <h2>2. Résultat</h2>
+      <div class="colonnes">
+        <figure>
+          <img id="original" alt="Image d'origine">
+          <figcaption class="discret">Original</figcaption>
+        </figure>
+        <figure>
+          <img id="apercu" alt="Aperçu avec la palette du jeu">
+          <figcaption class="discret">Avec les couleurs du jeu</figcaption>
+        </figure>
+      </div>
+
+      <div class="barre">
+        <a id="dl-csv" class="bouton" download="matrice_blocs.csv">Télécharger la matrice (CSV)</a>
+      </div>
+      <p id="note-grille" class="discret" hidden></p>
+      <div id="bloc-grille">
+        <div class="barre">
+          <a id="dl-png" class="bouton" download="grille_blocs.png">Télécharger la grille (PNG)</a>
+          <label>Zoom <input type="range" id="zoom" min="5" max="100" value="25"> <span id="zoom-val">25%</span></label>
+        </div>
+        <div class="defilement"><img id="grille" alt="Grille numérotée"></div>
+      </div>
+
+      <details>
+        <summary>Nombre de blocs par numéro</summary>
+        <table id="table-comptage"><thead><tr><th></th><th>Bloc</th><th>Quantité</th></tr></thead><tbody></tbody></table>
+      </details>
+    </section>
+  </main>
+
+  <script>window.PALETTE = {{ palette|tojson }}; window.MAX_DIM = {{ max_dim }};</script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

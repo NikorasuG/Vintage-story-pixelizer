@@ -1,0 +1,14 @@
+services:
+  vs-blocs:
+    build: .
+    image: vs-blocs:latest
+    container_name: vs-blocs
+    restart: unless-stopped
+    ports:
+      # accessible uniquement depuis le serveur : le reverse proxy (Caddy/nginx) passe devant
+      - "127.0.0.1:8000:8000"
+    environment:
+      - WEB_CONCURRENCY=2     # nombre de workers gunicorn
+    mem_limit: 2g             # une grosse image peut consommer plusieurs centaines de Mo
+    security_opt:
+      - no-new-privileges:true
