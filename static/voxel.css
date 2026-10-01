@@ -1,0 +1,11 @@
+.vox-layout { display:grid; grid-template-columns: minmax(0, 1fr) 340px; gap:1.25rem; align-items:start; }
+@media (max-width: 900px) { .vox-layout { grid-template-columns: 1fr; } }
+#vue { width:100%; height:70vh; min-height:360px; border:1px solid var(--bord, #2f343e); border-radius:8px; overflow:hidden; background:#15171c; }
+#vue canvas { display:block; }
+.vox-panneau { display:flex; flex-direction:column; gap:.6rem; }
+.couche-titre { display:flex; justify-content:space-between; font-size:1.05rem; }
+.barre.serre { flex-wrap:nowrap; margin:0; }
+.barre.serre input[type=range] { flex:1; min-width:0; }
+.modes { display:flex; flex-direction:column; gap:.25rem; }
+#vue2d { width:100%; max-height:420px; object-fit:contain; image-rendering:pixelated; border:1px solid var(--bord, #2f343e); border-radius:6px; background:#0f1115; }
+.avertissement { color:#ffb454; margin:.25rem 0 0; }

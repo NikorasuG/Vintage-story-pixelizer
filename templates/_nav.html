@@ -1,0 +1,10 @@
+<nav class="nav">
+  <a href="{{ url_for('index') }}"{% if request.endpoint == 'index' %} class="actif"{% endif %}>Image → blocs</a>
+  <a href="{{ url_for('voxel.page') }}"{% if request.endpoint == 'voxel.page' %} class="actif"{% endif %}>STL → voxels</a>
+</nav>
+<style>
+  .nav { display:flex; gap:.5rem; max-width:1100px; margin:0 auto; padding:.75rem 1.25rem 0; }
+  .nav a { color:var(--discret, #8b93a1); text-decoration:none; padding:.35rem .8rem; border-radius:6px; border:1px solid transparent; }
+  .nav a:hover { color:var(--texte, #e6e8ec); }
+  .nav a.actif { color:var(--texte, #e6e8ec); border-color:var(--bord, #2f343e); background:var(--carte, #1e2128); }
+</style>

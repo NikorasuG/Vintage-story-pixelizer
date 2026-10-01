@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STL → voxels</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='voxel.css') }}">
+</head>
+<body>
+  {% include "_nav.html" %}
+  <header>
+    <h1>STL → voxels</h1>
+    <p>Charge un modèle 3D (.stl), choisis le nombre de voxels en hauteur, puis parcours la structure couche par couche.</p>
+  </header>
+
+  <main>
+    <section class="carte">
+      <h2>1. Modèle</h2>
+      <label id="zone-depot" class="depot">
+        <input type="file" id="fichier" accept=".stl" hidden>
+        <span id="nom-fichier">Clique ou glisse ton fichier .stl ici</span>
+      </label>
+      <div class="barre">
+        <label>Hauteur en voxels
+          <input type="range" id="hauteur-range" min="1" max="{{ hauteur_max }}" value="64">
+          <input type="number" id="hauteur" min="1" max="{{ hauteur_max }}" value="64">
+        </label>
+        <label>Axe vertical du modèle
+          <select id="axe">
+            <option value="z">Z (par défaut)</option>
+            <option value="y">Y</option>
+            <option value="x">X</option>
+          </select>
+        </label>
+        <button id="btn-voxeliser" type="button" disabled>Voxeliser</button>
+      </div>
+      <p id="info" class="discret"></p>
+      <p id="avertissement" class="avertissement" hidden></p>
+      <p id="erreur" class="erreur" role="alert"></p>
+    </section>
+
+    <section class="carte" id="resultat" hidden>
+      <h2>2. Structure voxelisée</h2>
+      <div class="vox-layout">
+        <div>
+          <div id="vue"></div>
+          <p class="discret">Clic gauche : tourner · molette : zoom · clic droit : déplacer</p>
+        </div>
+
+        <aside class="vox-panneau">
+          <label class="couche-titre">Couche
+            <span><b id="couche-val">1</b> / <span id="couche-max">1</span></span>
+          </label>
+          <div class="barre serre">
+            <button id="couche-moins" type="button" class="secondaire" title="Couche précédente (↓)">▼</button>
+            <input type="range" id="couche" min="1" max="1" value="1">
+            <button id="couche-plus" type="button" class="secondaire" title="Couche suivante (↑)">▲</button>
+          </div>
+
+          <div class="modes">
+            <label><input type="radio" name="mode" value="jusqua" checked> Jusqu'à cette couche</label>
+            <label><input type="radio" name="mode" value="seule"> Cette couche seulement</label>
+          </div>
+
+          <p id="stats" class="discret"></p>
+          <canvas id="vue2d"></canvas>
+          <p class="discret">Vue de dessus de la couche (la couche précédente est en gris).</p>
+
+          <div class="barre">
+            <button id="btn-recentrer" type="button" class="secondaire">Recentrer la vue</button>
+            <button id="btn-export" type="button" class="secondaire">Exporter les couches (CSV)</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='vendor/three.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/OrbitControls.js') }}"></script>
+  <script src="{{ url_for('static', filename='voxel.js') }}"></script>
+</body>
+</html>

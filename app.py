@@ -3,13 +3,16 @@ import io
 
 from flask import Flask, jsonify, render_template, request
 
+from voxel_routes import bp as voxel_bp
+
 import core
 
 MAX_GRILLE_CASES = 250_000   # au-delà, la grille numérotée n'est pas dessinée (image trop lourde)
 TAILLE_PIXEL_MAX = 64
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024  # 20 Mo
+app.config["MAX_CONTENT_LENGTH"] = 250 * 1024 * 1024  # 20 Mo
+app.register_blueprint(voxel_bp)
 
 
 def erreur(message, code=400):
