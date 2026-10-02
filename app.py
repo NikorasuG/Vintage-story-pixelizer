@@ -14,6 +14,10 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 250 * 1024 * 1024  # 20 Mo
 app.register_blueprint(voxel_bp)
 
+@app.get("/favicon.ico")
+def favicon():
+    return send_from_directory(app.static_folder, "icons/favicon.ico",
+                               mimetype="image/vnd.microsoft.icon")
 
 def erreur(message, code=400):
     return jsonify(error=message), code

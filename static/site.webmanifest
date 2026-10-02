@@ -1,0 +1,13 @@
+{
+  "name": "Vintage Story Pixelizer",
+  "short_name": "VS Pixelizer",
+  "description": "Convertit des images en matrices de blocs et des modèles STL en voxels pour Vintage Story",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#15171c",
+  "theme_color": "#15171c",
+  "icons": [
+    { "src": "/static/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/static/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
